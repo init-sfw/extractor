@@ -14,6 +14,8 @@ Se encuentra procesando unas 500 páginas de Wikipedia, con requests individuale
 ## Ejecución
 
 El proyecto está desarrollado en Eclipse Kepler y consta de una sola clase ejecutable _Futbol.java_ la cual necesita de una conexión a internet para realizar los request.
+La parametrización es manual desde el código, sin una interfaz práctica.
+La salida es por consola y a la escritura de un archivo llamado _datos-mundial.json_ que puede ser procesado por Memoria.
 
 ## Próximo paso
 
