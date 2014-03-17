@@ -39,49 +39,32 @@ import net.sf.json.JSONSerializer;
  */
 public class Futbol {
 
-	// public static final JSONObject JSON_PAISES = cargarPaises();
-
-	public static final String ENCABEZADO_API = "http://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=";
-
-	public static final String ENCABEZADO_URL = "http://es.wikipedia.org/wiki/";
-
 	public static void main(String[] args) {
-		init();
+		init("Ficha_de_torneo_de_fútbol");
 	}
 
-	private static JSONObject cargarPaises() {
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader("resources/paises.json"));
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-
-			while (line != null) {
-				sb.append(line);
-				sb.append(System.getProperty("line.separator").toString());
-				line = br.readLine();
-			}
-			String everything = sb.toString();
-			return (JSONObject) JSONSerializer.toJSON(everything);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static void init() {
+	public static void init(String plantilla) {
+		
+		//TODO: REFACTOR IMPORTANTE PLANTEADO AQUÍ 
+		/*
+		 * Hay que modificar el comportamiento de esta clase para que:
+		 * 
+		 * 	- Sea más atómica
+		 * 	- Reciba cualquier plantilla de wikipedia
+		 * 	- Funcione tanto por API como por fuente de datos pelados
+		 * 	- Se puedan Mapear los atributos de la ficha a los campos de evento de memoria
+		 * 	- En el punto anterior permitir componer muchos
+		 * 	- Implementemos los test unitarios 
+		 * 
+		 */
+		
 		// Ejecuto el request de las páginas a wikipedia a través de su API HTML
-		String cadenaPaginas = "http://es.wikipedia.org/w/api.php?action=query&prop=revisions&list=embeddedin&eititle=Plantilla:Ficha_de_torneo_de_f%C3%BAtbol&eilimit=500&format=json";
+		String cadenaPaginas = Constantes.QUERY_API_PLANTILLA + plantilla;
 		String stringListaPaginas = requestGeneral(cadenaPaginas);
 		JSONObject listaPaginas = convertStringToJSONObject(stringListaPaginas);
 
-		// System.out.println(listaPaginas.toString());
+		System.out.println("\nListado de páginas encontradas con la plantilla " + plantilla + ":\n\n"
+				+ listaPaginas.toString());
 
 		// Tomo el array del json prosesado con la lista de las páginas
 		JSONArray arrayProcesado = listaPaginas.getJSONArray("array");
@@ -95,18 +78,18 @@ public class Futbol {
 			JSONObject object = (JSONObject) arrayProcesado.get(i);
 			String titulo = object.get("title").toString();
 			String pageid = object.get("pageid").toString();
-			String url = ENCABEZADO_API + titulo.replace(' ', '_');
+			String url = Constantes.ENCABEZADO_API_PAGINA + titulo.replace(' ', '_');
 
 			String infobox = requestGeneral(url);
 			ArrayList<JSONObject> aux = convertirInfoboxAMemoria(infobox,
 					titulo, pageid);
 			arrayInfoboxes.addAll(aux);
-
-			System.out.println(i);
 		}
 
 		crearArchivoJSON(arrayInfoboxes);
-		System.out.println("\n\n\n" + arrayInfoboxes);
+		System.out.println("\n\n\n" + arrayInfoboxes
+				+ "\n\nTotal de elementos convertidos: " + arrayInfoboxes.size()
+				+ " de " + arrayProcesado.size());
 	}
 
 	/**
@@ -234,7 +217,8 @@ public class Futbol {
 			Map<String, Object> object = convertirInfoboxAMap(
 					jsonQuery.getJSONObject(i), titulo);
 
-			if (object == null) {
+			if (object == null) { 
+				//TODO: En estos casos declarar una excepción particular y lanzarla para capturar mejor el evento fallido
 				System.out.println("No se pudo cargar el elemento " + i
 						+ " con los siguientes valores:\n\n");
 				System.out.println(jsonQuery.getJSONObject(i));
@@ -243,14 +227,22 @@ public class Futbol {
 
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-			aux.put("fecha", formatter.format(object.get("fechainicia")));
+			try
+			{
+				aux.put("fecha", formatter.format(object.get("fechainicia")));				
+			}
+			catch (Exception e)
+			{
+				Object o = object.get("fechainicia");
+				System.out.println(o);
+			}
 			aux.put("fechaCreacion", formatter.format(new Date()));
 			aux.put("titulo", titulo);
 			aux.put("categoria", "deporte");
 			aux.put("pais", "-1"); // convertirPais(object.getString("pageid"))
 			aux.put("descripcionBreve", object.get("descripcionbreve")
 					.toString());
-			aux.put("link", ENCABEZADO_URL + titulo.replace(' ', '_'));
+			aux.put("link", Constantes.ENCABEZADO_URL + titulo.replace(' ', '_'));
 			aux.put("imagen", "");
 			aux.put("ponderacion", 1);
 			array.add(aux);
@@ -276,48 +268,46 @@ public class Futbol {
 		String completo = jsonObject.getString("*");
 		// System.out.println(completo);
 
-		// Detectar los atributos que se quieran rescatar
+		/* Detectar los atributos que se quieran rescatar */
 		// Año
-		int indexAnio = completo.indexOf("año");
-		String aux = completo.substring(indexAnio, completo.length());
-		String anio = aux.substring(aux.indexOf("=") + 1, aux.indexOf("|"))
-				.trim();
+		String anio = getAtributoPlantilla(completo, "año");
 
 		if (anio.contains("y")) {
 			anio = anio.substring(0, anio.indexOf('y')).trim();
 		}
+		
+		// Fecha
+		String fechainicia = getAtributoPlantilla(completo, "fechainicia");
 
-		// Fecha inicia
-		int indexFechaInicia = completo.indexOf("fechainicia");
-		String auxFe = null;
-
-		try {
-			auxFe = completo.substring(indexFechaInicia, completo.length());
-		} catch (StringIndexOutOfBoundsException e) {
+		if (fechainicia.equals("")) {
 			return null;
 		}
-		String fechainicia = auxFe.substring(auxFe.indexOf("=") + 1,
-				auxFe.indexOf("|")).trim();
+		Date fecha = crearFecha(fechainicia, anio);
+		if (fecha == null)
+		{
+			return null;
+		}
+
+		// Creo descripción breve, transformando la notación wiki a HTML
+		String descripcionBreve = WikiModel.toHtml("Torneo: " + titulo + "\n"
+				+ crearDescripcionBreve(completo)).replace("\n", "<br/>");
 
 		// TODO: Activar esto cuando pueda resolver el parse de MediaWiki a HTML correcto
 		// Creo descripción breve, transformando la notación wiki a HTML
 		/*String descripcionBreve = parseWikiTextByLanguageToHTML(
 				"Torneo: " + titulo + "\n" + crearDescripcionBreve(completo))
-				.replace("\n", "<BR>"); */
+				.replace("\n", "<br/>");
 		
+		descripcionBreve = limpiarHTML(descripcionBreve);
+		descripcionBreve = reemplazarLinks(descripcionBreve);
+		
+		System.out.println(descripcionBreve);*/
 
-		// Creo descripción breve, transformando la notación wiki a HTML
-		String descripcionBreve = WikiModel.toHtml("Torneo: " + titulo + "\n"
-				+ crearDescripcionBreve(completo)).replace("\n", "<BR>");
-
-		Map<String, Object> ret = new HashMap<String, Object>();
-
-		if (fechainicia.equals("")) {
-			return null;
-		}
+		// Creo el map a retornar
+		Map<String, Object> ret = new HashMap<String, Object>();		
 
 		// Agregarlos a un JSONObject para poder devolverlo
-		ret.put("fechainicia", crearFecha(fechainicia, anio));
+		ret.put("fechainicia", fecha);
 		ret.put("descripcionbreve", descripcionBreve);
 
 		return ret;
@@ -400,8 +390,15 @@ public class Futbol {
 		// Goles totales
 		String goles = "\nGoles totales: "
 				+ getAtributoPlantilla(completo, "goles");
+		
+		// Reemplazo los valores que pueden molestar
+		ret = (sede + campeon + subcampeon + goleador + goles).replace("selb|", "")
+				.replace("Selb|", "")
+				.replace("sel|", "")
+				.replace("bandera|", "")
+				.replace("bandera2|", "");
 
-		return sede + campeon + subcampeon + goleador + goles;
+		return ret;
 	}
 
 	/**
@@ -418,7 +415,7 @@ public class Futbol {
 		try {
 			int index = completo.indexOf(att);
 			String aux = completo.substring(index, completo.length());
-			String ret = aux.substring(aux.indexOf("="), aux.indexOf("\n"));
+			String ret = aux.substring(aux.indexOf("=") + 1, aux.indexOf("\n")).trim();
 			return ret;
 		} catch (StringIndexOutOfBoundsException e) {
 			return "sin datos";
@@ -439,6 +436,25 @@ public class Futbol {
 		MarkupParser parser = new MarkupParser(language, builder);
 		parser.parse(wikiText);
 		return writer.toString();
+	}
+
+	/** 
+	 * Método que limpia los tags HTML del string parseado desde el formato wikimedia
+	 * @param descripcionBreve
+	 * @return
+	 */
+	private static String limpiarHTML(String descripcionBreve) {
+		return descripcionBreve.substring(descripcionBreve.indexOf("<body>") + 6, descripcionBreve.indexOf("</body>"));
+	}
+
+	/**
+	 * Método que completa como se debe el href de los links generados desde wikipedia
+	 * @param descripcionBreve
+	 * @return
+	 */
+	private static String reemplazarLinks(String descripcionBreve) {
+		//TODO: definir bien este método
+		throw new RuntimeException("Método sin implementar reemplazarLinks(String)");
 	}
 
 	/**
