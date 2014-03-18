@@ -24,6 +24,7 @@ import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
 import org.eclipse.mylyn.wikitext.core.util.ServiceLocator;
+import org.init.extractor.Constantes;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -92,34 +93,13 @@ public class Futbol {
 				+ " de " + arrayProcesado.size());
 	}
 
-	/**
-	 * Método que crea el archivo de json para ser consumido por Memoria
-	 * 
-	 * @param arrayInfoboxes
-	 */
-	private static void crearArchivoJSON(JSONArray arrayInfoboxes) {
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter("datos-mundial.json", "UTF-8");
-			writer.println(arrayInfoboxes.toString());
-			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/**
-	 * Método que realiza el request general a la lista de páginas que nos
-	 * interesan
+	 * Método que realiza el request HTTP que necesitemos según la cadena objetivo
 	 * 
-	 * @return string intermedio con las páginas particulares y sus direcciones
+	 * @return string con la devolución de la consulta realizada
 	 */
 	public static String requestGeneral(String cadena) {
-		// Defino variables
 		URL url = null;
 		try {
 			url = new URL(cadena);
@@ -139,7 +119,6 @@ public class Futbol {
 
 			connection.connect();
 
-			// read the result from the server
 			BufferedReader rd = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			sb = new StringBuilder();
@@ -150,11 +129,30 @@ public class Futbol {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			// close the connection, set all objects to null
 			connection.disconnect();
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * Método que crea el archivo de json para ser consumido por Memoria
+	 * 
+	 * @param arrayInfoboxes
+	 */
+	private static void crearArchivoJSON(JSONArray arrayInfoboxes) {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("datos-mundial.json", "UTF-8");
+			writer.println(arrayInfoboxes.toString());
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
