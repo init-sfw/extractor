@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.init.extractor.excepciones.ImposibleMapearEventoException;
 import org.init.extractor.utils.ArrangeEnum;
 import org.init.extractor.utils.PlantillaUtil;
 import org.init.memoria.futbol.eventos.AtributoEventoMemoria;
@@ -62,7 +63,7 @@ public class Mapper {
 		String atts[] = {"pais","campeón","subcampeón","goleador","goles"};
 		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
 		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);
-		arrangesFecha.add(ArrangeEnum.DESCRIPCION_BREVE);
+		arrangesDesc.add(ArrangeEnum.DESCRIPCION_BREVE);
 		mapear("descripcionBreve", String.class, atts, plantillaDescripcion, arrangesDesc);
 		
 	}
@@ -105,7 +106,12 @@ public class Mapper {
 		{
 			levantarValorAtributo(att, p.getContenidoPlantilla());
 			// Proceso atributos según los arranges necesarios
-			att.procesar();
+			try {
+				att.procesar();
+			} catch (ImposibleMapearEventoException e) {
+				System.out.println(e.getMessage() + "\n" + e.getCause());
+				return null;
+			}
 			System.out.println(att.getValorFinal());
 		}
 		

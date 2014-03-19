@@ -17,7 +17,7 @@ public class ArrangeProcessor {
 	 * @return el valor procesado con los arranges
 	 * 
 	 */
-	public static String procesarArrange(ArrangeEnum arrange, String valor) {
+	public static String procesarArrange(ArrangeEnum arrange, String valor) throws StringIndexOutOfBoundsException, NumberFormatException {
 		switch (arrange) {
 		case FECHA:
 			return procesarFecha(valor);
@@ -28,7 +28,7 @@ public class ArrangeProcessor {
 		}
 	}
 
-	private static String procesarFecha(String valor) {
+	private static String procesarFecha(String valor) throws StringIndexOutOfBoundsException, NumberFormatException {
 		return crearFecha(valor);
 	}
 
@@ -47,8 +47,11 @@ public class ArrangeProcessor {
 	 * de wikipedia, si es que puede
 	 * 
 	 * @param fecha
+	 * 
+	 * @throws StringIndexOutOfBoundsException
+	 * @throws NumberFormatException
 	 */
-	private static String crearFecha(String fecha) {
+	private static String crearFecha(String fecha) throws StringIndexOutOfBoundsException, NumberFormatException {
 		int dia = -1;
 		int mes = -1;
 		int a = -1;
@@ -56,22 +59,13 @@ public class ArrangeProcessor {
 		String auxAnio;
 
 		auxAnio = fecha.substring(fecha.indexOf("/") + 1).trim();
-		try {
-			a = Integer.parseInt(auxAnio);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+		if (auxAnio.contains("y"))
+		{
+			auxAnio = auxAnio.substring(0,auxAnio.indexOf("y")).trim();
 		}
-
-		try {
-			auxDia = fecha.substring(0, fecha.indexOf("de"));
-		} catch (StringIndexOutOfBoundsException e) {
-			e.printStackTrace();
-		}
-		try {
-			dia = Integer.parseInt(auxDia.replace('[', ' ').trim());
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+		a = Integer.parseInt(auxAnio);
+		auxDia = fecha.substring(0, fecha.indexOf("de"));
+		dia = Integer.parseInt(auxDia.replace('[', ' ').trim());
 
 		String mesS = fecha.substring(fecha.indexOf("de") + 2,fecha.indexOf("/")).trim();
 		mes = convertirMes(mesS);

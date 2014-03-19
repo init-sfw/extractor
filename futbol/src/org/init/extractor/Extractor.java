@@ -37,14 +37,6 @@ public class Extractor {
 		
 		// Cargo las páginas que correspondan a la plantilla seteada
 		plantillaObjetivo.cargarPaginas(map);
-		 //- 
-		// Seleccionar plantilla
-		
-		// Rescatar atributos
-		
-		// Mapear atributos al evento de memoria
-		
-		// Hacer las extracciones y repartirlas según los mapeos
 		
 		// Generar la salida y las estadísticas
 		
