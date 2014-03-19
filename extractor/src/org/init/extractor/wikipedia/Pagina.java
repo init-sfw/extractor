@@ -12,7 +12,11 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.init.extractor.Constantes;
+import org.init.extractor.excepciones.ImposibleMapearEventoException;
+import org.init.extractor.utils.PlantillaUtil;
 import org.init.extractor.utils.Request;
+import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
+import org.init.extractor.wikipedia.eventos.AtributoExtranjero;
 import org.init.extractor.wikipedia.eventos.EventoMemoria;
 import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 
@@ -76,8 +80,47 @@ public class Pagina {
 	 * respetando el formato de mapeo establecido
 	 */
 	public void cargarAtributos(Mapper mapper) {
-		EventoMemoria evt = mapper.levantarMapeo(this);
+		EventoMemoria evt = levantarMapeo(mapper);
 		this.evento = evt;
+	}
+	
+	/**
+	 * Método que levanta los valores de los mapeos desde el infobox y los devuelve en un objeto EventoMemoria cargado según mapeo
+	 * 
+	 * @param mapper
+	 * 
+	 */
+	public EventoMemoria levantarMapeo(Mapper mapper)
+	{
+		// Ejecuto constructor copia para que tome los mapeos
+		EventoMemoria evt = new EventoMemoria(mapper.getEventoModelo(),this);
+		
+		for (AtributoEventoMemoria att : evt.getAtributos())
+		{
+			levantarValorAtributo(att, this.contenidoPlantilla);
+			// Proceso atributos según los arranges necesarios
+			try {
+				att.procesar();
+			} catch (ImposibleMapearEventoException e) {
+				System.out.println(e.getMessage() + "\n" + e.getCause());
+				return null;
+			}
+		}
+		
+		return evt;		
+	}
+
+	/**
+	 * Método que levanta el valor de un atributo sin procesarlo
+	 * @param att
+	 */
+	private void levantarValorAtributo(AtributoEventoMemoria att, String infobox) {		
+		for (Map.Entry<String, AtributoExtranjero> entry : att.getListaMapeos().entrySet())
+		{
+			AtributoExtranjero atExt = entry.getValue();
+			String valorAt = PlantillaUtil.getAtributoPlantilla(infobox, atExt.getNombre());
+			atExt.setValor(valorAt);
+		}
 	}
 
 	public String getNombre() {

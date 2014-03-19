@@ -21,14 +21,12 @@ import org.init.extractor.utils.ArrangeProcessor;
 public class AtributoEventoMemoria {
 
 	private String nombre;
-	private Object tipoDato;
 	private MapaAtributosMapeados listaMapeos;
 	private String valorFinal;
 	private List<ArrangeEnum> arranges;
 
-	public AtributoEventoMemoria(String nombre, Object tipoDato) {
+	public AtributoEventoMemoria(String nombre) {
 		this.nombre = nombre;
-		this.tipoDato = tipoDato;
 		arranges = new ArrayList<ArrangeEnum>();
 	}
 
@@ -61,14 +59,6 @@ public class AtributoEventoMemoria {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public Object getTipoDato() {
-		return tipoDato;
-	}
-
-	public void setTipoDato(Object tipoDato) {
-		this.tipoDato = tipoDato;
 	}
 
 	public MapaAtributosMapeados getListaMapeos() {

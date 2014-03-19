@@ -23,13 +23,13 @@ public class Mapper {
 	
 	private ArrayList<AtributoEventoMemoria> atributosMemoria;
 	
-	private EventoMemoria evento;
+	private EventoMemoria eventoModelo;
 	
 	public Mapper()
 	{
 		atributosMemoria = new ArrayList<AtributoEventoMemoria>();
-		evento = new EventoMemoria();
-		evento.setAtributos(atributosMemoria);
+		eventoModelo = new EventoMemoria();
+		eventoModelo.setAtributos(atributosMemoria);
 	}
 	
 	/**
@@ -53,33 +53,53 @@ public class Mapper {
 		String plantillaFecha = "{fechainicia}/{año}";
 		List<ArrangeEnum> arrangesFecha = new ArrayList<ArrangeEnum>(1);
 		arrangesFecha.add(ArrangeEnum.FECHA);
-		mapear("fechaCreacion", Date.class, attFecha, plantillaFecha, arrangesFecha);
-		mapear("titulo", String.class, "titulo", null);
-		mapear("categoria", String.class, "categoria", null);
-		mapear("pais", String.class, "pais", null);
-		mapear("link", String.class, "link", null);
-		mapear("imagen", String.class, "imagen", null);
-		mapear("ponderacion", String.class, "ponderacion", null);
+		mapear("fechaCreacion", attFecha, plantillaFecha, arrangesFecha);
+		mapear("titulo", "titulo", null);
+		mapear("categoria", "categoria", null);
+		mapear("pais", "pais", null);
+		mapear("link", "link", null);
+		mapear("imagen", "imagen", null);
+		mapear("ponderacion", "ponderacion", null);
 		String atts[] = {"pais","campeón","subcampeón","goleador","goles"};
 		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
 		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);
 		arrangesDesc.add(ArrangeEnum.DESCRIPCION_BREVE);
-		mapear("descripcionBreve", String.class, atts, plantillaDescripcion, arrangesDesc);
+		mapear("descripcionBreve", atts, plantillaDescripcion, arrangesDesc);
 		
 	}
 
-	private void mapear(String attMemoria, Object tipoMemoria, String attFicha, List<ArrangeEnum> arranges)
+	/**
+	 * Método que mapea un atributo de Memoria a un atributo de los datos extraídos
+	 * considerando una serie de arranges que procesarán el valor para que sea el adecuado
+	 * 
+	 * @param attMemoria
+	 * @param tipoMemoria
+	 * @param attFicha
+	 * @param arranges
+	 */
+	private void mapear(String attMemoria, String attFicha, List<ArrangeEnum> arranges)
 	{
-		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria, tipoMemoria);
+		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria);
 		att.setArranges(arranges);
 		AtributoExtranjero ext = new AtributoExtranjero(attFicha);
 		MapaAtributosMapeados map = new MapaAtributosMapeados();
 		map.put(attFicha, ext);
 		map(att,map);		
 	}
-	
-	private void mapear(String attMemoria, Object tipoMemoria, String[] atts, String plantilla,List<ArrangeEnum> arranges) {
-		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria, tipoMemoria);
+
+	/**
+	 * Método que mapea un atributo de Memoria a una serie de atributos de los datos extraídos
+	 * considerando una serie de arranges que procesarán el valor para que sea el adecuado y una 
+	 * plantilla que defina la concatenación que necesiten múltiples atributos
+	 * 
+	 * @param attMemoria
+	 * @param atts
+	 * @param plantilla
+	 * @param arranges
+	 * 
+	 */	 
+	private void mapear(String attMemoria, String[] atts, String plantilla,List<ArrangeEnum> arranges) {
+		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria);
 		att.setArranges(arranges);
 		MapaAtributosMapeados map = new MapaAtributosMapeados();
 		map.setPlantillaMapeo(plantilla);
@@ -90,51 +110,12 @@ public class Mapper {
 		}
 		map(att,map);		
 	}
-	
-	/**
-	 * Método que levanta los valores de los mapeos desde el infobox y los devuelve en un objeto EventoMemoria cargado según mapeo
-	 * 
-	 * @param p la página de la que se quiere mapear el contenido en string del infobox
-	 * 
-	 */
-	public EventoMemoria levantarMapeo(Pagina p)
-	{
-		// Ejecuto constructor copia para que tome los mapeos
-		EventoMemoria evt = new EventoMemoria(evento,p);
-		
-		for (AtributoEventoMemoria att : evt.getAtributos())
-		{
-			levantarValorAtributo(att, p.getContenidoPlantilla());
-			// Proceso atributos según los arranges necesarios
-			try {
-				att.procesar();
-			} catch (ImposibleMapearEventoException e) {
-				System.out.println(e.getMessage() + "\n" + e.getCause());
-				return null;
-			}
-		}
-		
-		return evt;		
+
+	public EventoMemoria getEventoModelo() {
+		return eventoModelo;
 	}
 
-	/**
-	 * Método que levanta el valor de un atributo sin procesarlo
-	 * @param att
-	 */
-	private void levantarValorAtributo(AtributoEventoMemoria att, String infobox) {		
-		for (Map.Entry<String, AtributoExtranjero> entry : att.getListaMapeos().entrySet())
-		{
-			AtributoExtranjero atExt = entry.getValue();
-			String valorAt = PlantillaUtil.getAtributoPlantilla(infobox, atExt.getNombre());
-			atExt.setValor(valorAt);
-		}
-	}
-
-	public EventoMemoria getEvento() {
-		return evento;
-	}
-
-	public void setEvento(EventoMemoria evento) {
-		this.evento = evento;
+	public void setEventoModelo(EventoMemoria evento) {
+		this.eventoModelo = evento;
 	}
 }
