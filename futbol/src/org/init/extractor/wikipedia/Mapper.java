@@ -112,7 +112,6 @@ public class Mapper {
 				System.out.println(e.getMessage() + "\n" + e.getCause());
 				return null;
 			}
-			System.out.println(att.getValorFinal());
 		}
 		
 		return evt;		

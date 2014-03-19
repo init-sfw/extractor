@@ -1,5 +1,14 @@
 package org.init.extractor.utils;
 
+import java.util.ArrayList;
+
+import org.init.extractor.wikipedia.Pagina;
+import org.init.extractor.wikipedia.Plantilla;
+import org.init.memoria.futbol.eventos.AtributoEventoMemoria;
+import org.init.memoria.futbol.eventos.EventoMemoria;
+
+import net.sf.json.JSONObject;
+
 /**
  * Clase de utilidades para trabajar con las plantillas de Wikipedia
  * 
@@ -27,6 +36,25 @@ public class PlantillaUtil {
 		} catch (StringIndexOutOfBoundsException e) {
 			return "sin datos";
 		}
+	}
+	
+	public static ArrayList<JSONObject> convertirPlantillaAJSON(Plantilla plantilla)
+	{
+		// Creo el jsonArray a devolver 
+		ArrayList<JSONObject> array = new ArrayList<JSONObject>();
+
+		// Itero el array y creo un nuevo json
+		for (Pagina p : plantilla.getPaginasExitosas()) {
+			JSONObject aux = new JSONObject();
+			EventoMemoria e = p.getEvento();
+			
+			for (AtributoEventoMemoria att : e.getAtributos())
+			{
+				aux.put(att.getNombre(), att.getValorFinal());
+			}
+			array.add(aux);
+		}		
+		return array;		
 	}
 
 }

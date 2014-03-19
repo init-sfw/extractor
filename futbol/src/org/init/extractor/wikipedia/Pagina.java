@@ -31,9 +31,8 @@ public class Pagina {
 	private URL urlAPI;
 	private String contenidoCompleto;
 	private String contenidoPlantilla;
-	private ArrayList<EventoMemoria> eventos;
+	private EventoMemoria evento;
 	private Plantilla plantillaPadre;
-	private boolean exitosa = true;
 
 	/**
 	 * Constructor de Página que recibe el nombre y realizará la consulta que le
@@ -51,7 +50,6 @@ public class Pagina {
 		this.url = new URL(Constantes.ENCABEZADO_URL + nombre.replace(" ", "_"));
 		this.urlAPI = new URL(Constantes.ENCABEZADO_API_PAGINA
 				+ nombre.replace(" ", "_"));
-		eventos = new ArrayList<EventoMemoria>();
 		this.contenidoCompleto = null;
 		this.contenidoPlantilla = null;
 	}
@@ -79,11 +77,7 @@ public class Pagina {
 	 */
 	public void cargarAtributos(Mapper mapper) {
 		EventoMemoria evt = mapper.levantarMapeo(this);
-		if (evt != null) {
-			eventos.add(evt);
-		} else {
-			this.exitosa = false;
-		}
+		this.evento = evt;
 	}
 
 	public String getNombre() {
@@ -142,14 +136,6 @@ public class Pagina {
 		this.contenidoPlantilla = contenidoPlantilla;
 	}
 
-	public ArrayList<EventoMemoria> getEventos() {
-		return eventos;
-	}
-
-	public void setEventos(ArrayList<EventoMemoria> eventos) {
-		this.eventos = eventos;
-	}
-
 	public Plantilla getPlantillaPadre() {
 		return plantillaPadre;
 	}
@@ -158,11 +144,11 @@ public class Pagina {
 		this.plantillaPadre = plantillaPadre;
 	}
 
-	public boolean isExitosa() {
-		return exitosa;
+	public EventoMemoria getEvento() {
+		return evento;
 	}
 
-	public void setExitosa(boolean exitosa) {
-		this.exitosa = exitosa;
+	public void setEvento(EventoMemoria evento) {
+		this.evento = evento;
 	}
 }

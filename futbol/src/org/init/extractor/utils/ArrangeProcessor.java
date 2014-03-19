@@ -38,7 +38,7 @@ public class ArrangeProcessor {
 				.replace("sel|", "").replace("bandera|", "")
 				.replace("bandera2|", "");
 		// Transformo la notación wiki a HTML
-		valor = WikiModel.toHtml(valor);
+		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
 		return valor;
 	}
 

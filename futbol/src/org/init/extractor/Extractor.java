@@ -1,7 +1,13 @@
 package org.init.extractor;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.init.extractor.utils.FileUtil;
+import org.init.extractor.utils.PlantillaUtil;
 import org.init.extractor.wikipedia.Mapper;
 import org.init.extractor.wikipedia.Plantilla;
 
@@ -27,19 +33,31 @@ public class Extractor {
 	 * @throws MalformedURLException 
 	 */
 	public void init() throws MalformedURLException
-	{
-		// Cargo el modelo de atributos de la plantilla seteada
-		//Plantilla.cargarModeloAtributos();
-		
+	{		
 		// Mapeo los atributos
 		Mapper map = new Mapper();
 		map.mapearla();
 		
 		// Cargo las páginas que correspondan a la plantilla seteada
 		plantillaObjetivo.cargarPaginas(map);
+
+		// Array con todos los infoboxes de las páginas que se pedirán
+		JSONArray arrayInfoboxes = new JSONArray();		
+		// Generar la salida en formato JSON
+		ArrayList<JSONObject> jsonFinal = PlantillaUtil.convertirPlantillaAJSON(plantillaObjetivo);
+		arrayInfoboxes.addAll(jsonFinal);
 		
-		// Generar la salida y las estadísticas
+		// Genero el archivo JSON
+		FileUtil.crearArchivoJSON("datos-deportes.json", arrayInfoboxes);
 		
+		// Estadísticas
+		info();
 	}
 
+	private void info() {
+		System.out.println("\nSe cargaron " + plantillaObjetivo.getPaginasExitosas().size()
+				+ " datos de páginas de un total de " + (plantillaObjetivo.getPaginasExitosas().size() + plantillaObjetivo.getPaginasFallidas().size()));
+		System.out.println("Fallaron: " + plantillaObjetivo.getPaginasFallidas().size() + " páginas");
+		
+	}
 }

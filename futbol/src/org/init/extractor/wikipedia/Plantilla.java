@@ -59,7 +59,7 @@ public class Plantilla {
 
 		// Recorro el arrayProcesado, busco cada una de sus páginas y traigo el
 		// resultado en json que guardo en arrayInfoboxes
-		for (int i = 0; i < 74; i++) { // TODO: arrayProcesado.size()
+		for (int i = 0; i < 20; i++) { // TODO: arrayProcesado.size()
 			JSONObject object = (JSONObject) arrayProcesado.get(i);
 			String titulo = object.get("title").toString();
 			String pageid = object.get("pageid").toString();
@@ -67,17 +67,13 @@ public class Plantilla {
 			Pagina p = new Pagina(titulo, pageid, this);
 			p.generarContenido();
 			p.cargarAtributos(mapper);
-			if (p.isExitosa()) {
+			if (p.getEvento() != null) {
 				paginasExitosas.add(p);
 			}
 			else {
 				paginasFallidas.add(p);
 			}
 		}
-
-		System.out.println("\nSe cargaron " + paginasExitosas.size()
-				+ " datos de páginas de un total de " + (paginasExitosas.size() + paginasFallidas.size()));
-		System.out.println("Fallaron: " + paginasFallidas.size() + " páginas");
 	}
 
 	/**
@@ -127,11 +123,19 @@ public class Plantilla {
 		this.url = url;
 	}
 
-	public List<Pagina> getPaginas() {
+	public List<Pagina> getPaginasExitosas() {
 		return paginasExitosas;
 	}
 
-	public void setPaginas(List<Pagina> paginas) {
-		this.paginasExitosas = paginas;
+	public void setPaginasExitosas(List<Pagina> paginasExitosas) {
+		this.paginasExitosas = paginasExitosas;
+	}
+
+	public List<Pagina> getPaginasFallidas() {
+		return paginasFallidas;
+	}
+
+	public void setPaginasFallidas(List<Pagina> paginasFallidas) {
+		this.paginasFallidas = paginasFallidas;
 	}
 }
