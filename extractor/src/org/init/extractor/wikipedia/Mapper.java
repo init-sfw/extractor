@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.init.extractor.Constantes;
 import org.init.extractor.excepciones.ImposibleMapearEventoException;
 import org.init.extractor.utils.ArrangeEnum;
 import org.init.extractor.utils.PlantillaUtil;
@@ -53,13 +54,16 @@ public class Mapper {
 		String plantillaFecha = "{fechainicia}/{año}";
 		List<ArrangeEnum> arrangesFecha = new ArrayList<ArrangeEnum>(1);
 		arrangesFecha.add(ArrangeEnum.FECHA);
-		mapear("fechaCreacion", attFecha, plantillaFecha, arrangesFecha);
-		mapear("titulo", "titulo", null);
-		mapear("categoria", "categoria", null);
+		mapear("fechaCreacion", "descripcion", null); //TODO: debería ser valor creado acá
+		mapear("fecha", attFecha, plantillaFecha, arrangesFecha);
+		mapear("titulo", "torneo", null);
+		mapear("categoria", "categoria", null); //TODO: debería ser valor fijo
 		mapear("pais", "pais", null);
-		mapear("link", "link", null);
+		List<ArrangeEnum> arrangesLink = new ArrayList<ArrangeEnum>(1);
+		arrangesLink.add(ArrangeEnum.URL);
+		mapear("link", Constantes.ENCABEZADO_URL + "torneo", arrangesLink); 
 		mapear("imagen", "imagen", null);
-		mapear("ponderacion", "ponderacion", null);
+		mapear("ponderacion", "ponderacion", null); //TODO: debería ser valor fijo
 		String atts[] = {"pais","campeón","subcampeón","goleador","goles"};
 		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
 		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);

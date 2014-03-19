@@ -23,6 +23,8 @@ public class ArrangeProcessor {
 			return procesarFecha(valor);
 		case DESCRIPCION_BREVE:
 			return procesarDescripcion(valor);
+		case URL:
+			return procesarURL(valor);
 		default:
 			return valor;
 		}
@@ -40,6 +42,10 @@ public class ArrangeProcessor {
 		// Transformo la notación wiki a HTML
 		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
 		return valor;
+	}
+
+	private static String procesarURL(String valor) {
+		return valor.replace(" ", "_");
 	}
 
 	/**
