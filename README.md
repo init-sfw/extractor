@@ -7,19 +7,22 @@ Inicialmente creado con el objetivo de servir como fuente de datos al proyecto _
 
 ## Versión actual
 
-Se cuenta con una versión inicial, POC, en JAVA con mucho hardcodeo y sin manejo de problemas o cambios.
+En la segunda versión de la app se hace una evolución a una arquitectura más seria pero aún inmadura, a modo de POC y con necesidad de mucha refactorización.
+
+Sin tests, sin resoluciones arquitectónicas eficientes y sin performance.
+Aún no escribe a disco el JSON de salida pero si lo aloja correctamente en las estructuras de datos de la arquitectura.
 
 Se encuentra procesando unas 500 páginas de Wikipedia, con requests individuales (algo a mejorar), sobre torneos de fútbol (responden al template  [Ficha de torneo de fútbol](http://es.wikipedia.org/wiki/Plantilla:Ficha_de_torneo_de_f%C3%BAtbol) de las que extrae el infobox correspondiente y lo transforma en un evento procesable por Memoria.
 
 ## Ejecución
 
-El proyecto está desarrollado en Eclipse Kepler y consta de una sola clase ejecutable _Futbol.java_ la cual necesita de una conexión a internet para realizar los request.
+El proyecto está desarrollado en Eclipse Kepler y consta de una arquitectura simple y a mejorar la cual necesita de una conexión a internet para realizar los request.
 La parametrización es manual desde el código, sin una interfaz práctica.
-La salida es por consola y a la escritura de un archivo llamado _datos-mundial.json_ que puede ser procesado por Memoria.
+La salida queda pendiente para una próxima versión, aunque en versiones anteriores se estaba consiguiendo una salida decente.
 
 ## Próximo paso
 
-La próxima versión debería pensarse en trabajar con SPARQL a través de la herramienta [dbpedia](http://dbpedia.org/About) para permitir una mayor flexibilidad y mejor live performance, además de poder realizar más completos y automatizables sets de datos.
+La próxima versión tendrá como objetivo poder generar el archivo json de salida y quizás permitir trabajar con alguna otra plantilla de Wikipedia desde una parametrización interna.
 
 ## Más información
 
