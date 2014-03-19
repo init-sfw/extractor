@@ -13,8 +13,8 @@ import net.sf.json.JSONSerializer;
 
 import org.init.extractor.Constantes;
 import org.init.extractor.utils.Request;
-import org.init.memoria.futbol.eventos.EventoMemoria;
-import org.init.memoria.futbol.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.eventos.EventoMemoria;
+import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 
 /**
  * Clase que representa a una página particular de Wikipedia, la cual puede

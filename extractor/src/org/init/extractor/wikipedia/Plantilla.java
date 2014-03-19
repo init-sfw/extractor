@@ -11,7 +11,7 @@ import net.sf.json.JSONSerializer;
 
 import org.init.extractor.Constantes;
 import org.init.extractor.utils.Request;
-import org.init.memoria.futbol.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 
 /**
  * Clase que representa originalmente una plantilla de wikipedia para contener

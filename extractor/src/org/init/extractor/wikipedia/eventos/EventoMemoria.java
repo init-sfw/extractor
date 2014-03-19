@@ -1,4 +1,4 @@
-package org.init.memoria.futbol.eventos;
+package org.init.extractor.wikipedia.eventos;
 
 import java.util.ArrayList;
 import java.util.Collections;

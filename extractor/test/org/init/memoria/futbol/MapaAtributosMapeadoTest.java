@@ -2,7 +2,7 @@ package org.init.memoria.futbol;
 
 import static org.junit.Assert.*;
 
-import org.init.memoria.futbol.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 import org.junit.Test;
 
 public class MapaAtributosMapeadoTest {

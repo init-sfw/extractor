@@ -1,7 +1,7 @@
 package org.init.extractor.excepciones;
 
-import org.init.memoria.futbol.eventos.AtributoEventoMemoria;
-import org.init.memoria.futbol.eventos.EventoMemoria;
+import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
+import org.init.extractor.wikipedia.eventos.EventoMemoria;
 
 public class ImposibleMapearEventoException extends Exception {
 	

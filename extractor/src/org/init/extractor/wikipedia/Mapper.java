@@ -8,10 +8,10 @@ import java.util.Map;
 import org.init.extractor.excepciones.ImposibleMapearEventoException;
 import org.init.extractor.utils.ArrangeEnum;
 import org.init.extractor.utils.PlantillaUtil;
-import org.init.memoria.futbol.eventos.AtributoEventoMemoria;
-import org.init.memoria.futbol.eventos.AtributoExtranjero;
-import org.init.memoria.futbol.eventos.EventoMemoria;
-import org.init.memoria.futbol.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
+import org.init.extractor.wikipedia.eventos.AtributoExtranjero;
+import org.init.extractor.wikipedia.eventos.EventoMemoria;
+import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 
 /**
  * Clae que resuelve el mapeo de los atributos de memoria a los atributos de las plantillas de wikipedia

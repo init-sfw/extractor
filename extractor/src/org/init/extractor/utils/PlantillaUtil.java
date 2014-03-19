@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.init.extractor.wikipedia.Pagina;
 import org.init.extractor.wikipedia.Plantilla;
-import org.init.memoria.futbol.eventos.AtributoEventoMemoria;
-import org.init.memoria.futbol.eventos.EventoMemoria;
+import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
+import org.init.extractor.wikipedia.eventos.EventoMemoria;
 
 import net.sf.json.JSONObject;
 

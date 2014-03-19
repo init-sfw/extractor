@@ -1,4 +1,4 @@
-package org.init.memoria.futbol.eventos;
+package org.init.extractor.wikipedia.eventos;
 
 /**
  * Clase que representa a un atributo en particular de la ficha del template de la página de Wikipedia
