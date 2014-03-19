@@ -420,22 +420,6 @@ public class Futbol {
 		}
 	}
 
-	/**
-	 * Método que parsea un string según un markupLanguaje a HTML
-	 * 
-	 * @param wikiText
-	 * @return
-	 */
-	public static String parseWikiTextByLanguageToHTML(String wikiText) {
-		MarkupLanguage language = ServiceLocator.getInstance()
-				.getMarkupLanguage("MediaWiki");
-		StringWriter writer = new StringWriter();
-		HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
-		MarkupParser parser = new MarkupParser(language, builder);
-		parser.parse(wikiText);
-		return writer.toString();
-	}
-
 	/** 
 	 * Método que limpia los tags HTML del string parseado desde el formato wikimedia
 	 * @param descripcionBreve

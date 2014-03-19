@@ -1,7 +1,12 @@
 package org.init.extractor.utils;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 
+import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
+import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
+import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
+import org.eclipse.mylyn.wikitext.core.util.ServiceLocator;
 import org.init.extractor.wikipedia.Pagina;
 import org.init.extractor.wikipedia.Plantilla;
 import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
@@ -55,6 +60,41 @@ public class PlantillaUtil {
 			array.add(aux);
 		}		
 		return array;		
+	}
+
+	/**
+	 * Método que parsea un string según un markupLanguaje a HTML
+	 * 
+	 * @param wikiText
+	 * @return
+	 */
+	public static String parseWikiTextByLanguageToHTML(String wikiText) {
+		MarkupLanguage language = ServiceLocator.getInstance()
+				.getMarkupLanguage("MediaWiki");
+		StringWriter writer = new StringWriter();
+		HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
+		MarkupParser parser = new MarkupParser(language, builder);
+		parser.parse(wikiText);
+		return writer.toString();
+	}
+
+	/** 
+	 * Método que limpia los tags HTML del string parseado desde el formato wikimedia
+	 * @param descripcionBreve
+	 * @return
+	 */
+	private static String limpiarHTML(String descripcionBreve) {
+		return descripcionBreve.substring(descripcionBreve.indexOf("<body>") + 6, descripcionBreve.indexOf("</body>"));
+	}
+
+	/**
+	 * Método que completa como se debe el href de los links generados desde wikipedia
+	 * @param descripcionBreve
+	 * @return
+	 */
+	private static String reemplazarLinks(String descripcionBreve) {
+		//TODO: definir bien este método
+		throw new RuntimeException("Método sin implementar reemplazarLinks(String)");
 	}
 
 }
