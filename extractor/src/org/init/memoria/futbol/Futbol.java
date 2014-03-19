@@ -419,35 +419,4 @@ public class Futbol {
 			return "sin datos";
 		}
 	}
-
-	/** 
-	 * Método que limpia los tags HTML del string parseado desde el formato wikimedia
-	 * @param descripcionBreve
-	 * @return
-	 */
-	private static String limpiarHTML(String descripcionBreve) {
-		return descripcionBreve.substring(descripcionBreve.indexOf("<body>") + 6, descripcionBreve.indexOf("</body>"));
-	}
-
-	/**
-	 * Método que completa como se debe el href de los links generados desde wikipedia
-	 * @param descripcionBreve
-	 * @return
-	 */
-	private static String reemplazarLinks(String descripcionBreve) {
-		//TODO: definir bien este método
-		throw new RuntimeException("Método sin implementar reemplazarLinks(String)");
-	}
-
-	/**
-	 * Método que convierte el valor de país de wikipedia al índice
-	 * correspondiente de Memoria
-	 * 
-	 * @param string
-	 * @return
-	 */
-	private static Object convertirPais(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

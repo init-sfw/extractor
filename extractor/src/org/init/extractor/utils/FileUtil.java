@@ -26,12 +26,20 @@ public class FileUtil {
 			writer.println(array.toString());
 			writer.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Método que convierte el valor de país de wikipedia al código definido por la ISO
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static Object convertirPaisAISO(String string) {
+		return null;
 	}
 
 }
