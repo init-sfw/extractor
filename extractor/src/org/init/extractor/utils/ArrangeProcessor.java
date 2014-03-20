@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ArrangeProcessor {
+	
+	private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Método que procesa un arrange determinado sobre el valor recibido por
@@ -25,6 +27,12 @@ public class ArrangeProcessor {
 			return procesarDescripcion(valor);
 		case URL:
 			return procesarURL(valor);
+		case FECHA_ACTUAL:
+			return procesarFechaActual();
+		case CATEGORIA:
+			return procesarCategoria();
+		case PONDERACION:
+			return procesarPonderacion();
 		default:
 			return valor;
 		}
@@ -46,6 +54,18 @@ public class ArrangeProcessor {
 
 	private static String procesarURL(String valor) {
 		return valor.replace(" ", "_");
+	}
+
+	private static String procesarFechaActual() {
+		return formatter.format(new Date());
+	}
+
+	private static String procesarCategoria() {
+		return "deporte";
+	}
+
+	private static String procesarPonderacion() {
+		return "1";
 	}
 
 	/**
@@ -80,7 +100,6 @@ public class ArrangeProcessor {
 		gc.clear();
 		gc.set(a, mes, dia);
 		Date d = new Date(gc.getTimeInMillis());
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		return formatter.format(d);
 	}

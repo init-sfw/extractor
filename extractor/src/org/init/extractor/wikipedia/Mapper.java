@@ -50,20 +50,26 @@ public class Mapper {
 	 */
 	public void mapearla()
 	{
+		List<ArrangeEnum> arrangeFechaActual = new ArrayList<ArrangeEnum>();
+		arrangeFechaActual.add(ArrangeEnum.FECHA_ACTUAL);
+		mapear("fechaCreacion", "fechaCreacion", arrangeFechaActual); //TODO: Sobreescribir metodo mapear
 		String [] attFecha = {"fechainicia", "año"};
 		String plantillaFecha = "{fechainicia}/{año}";
 		List<ArrangeEnum> arrangesFecha = new ArrayList<ArrangeEnum>(1);
 		arrangesFecha.add(ArrangeEnum.FECHA);
-		mapear("fechaCreacion", "descripcion", null); //TODO: debería ser valor creado acá
 		mapear("fecha", attFecha, plantillaFecha, arrangesFecha);
-		mapear("titulo", "torneo", null);
-		mapear("categoria", "categoria", null); //TODO: debería ser valor fijo
+		mapear("titulo", "torneo", null); //TODO: Arreglar
+		List<ArrangeEnum> arrangeCategoria = new ArrayList<ArrangeEnum>();
+		arrangeCategoria.add(ArrangeEnum.CATEGORIA);
+		mapear("categoria", "categoria", arrangeCategoria);
 		mapear("pais", "pais", null);
 		List<ArrangeEnum> arrangesLink = new ArrayList<ArrangeEnum>(1);
 		arrangesLink.add(ArrangeEnum.URL);
-		mapear("link", Constantes.ENCABEZADO_URL + "torneo", arrangesLink); 
-		mapear("imagen", "imagen", null);
-		mapear("ponderacion", "ponderacion", null); //TODO: debería ser valor fijo
+		mapear("link", "link", arrangesLink);  //TODO: Arreglar
+		mapear("imagen", "imagen", null); //TODO: Arreglar
+		List<ArrangeEnum> arrangesPonderacion = new ArrayList<ArrangeEnum>(1);
+		arrangesPonderacion.add(ArrangeEnum.PONDERACION);
+		mapear("ponderacion", "ponderacion", arrangesPonderacion);
 		String atts[] = {"pais","campeón","subcampeón","goleador","goles"};
 		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
 		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);

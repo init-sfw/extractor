@@ -12,6 +12,12 @@ public class AtributoExtranjero {
 	private String valor;
 	private AtributoEventoMemoria eventoMapeado;
 	
+	public AtributoExtranjero()
+	{
+		this.nombre = null;
+		this.valor = null;
+	}
+	
 	public AtributoExtranjero(String nombre)
 	{
 		this.nombre = nombre;
