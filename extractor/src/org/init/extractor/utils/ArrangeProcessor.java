@@ -33,6 +33,8 @@ public class ArrangeProcessor {
 			return procesarCategoria();
 		case PONDERACION:
 			return procesarPonderacion();
+		case TITULO_PAGINA:
+			return procesarTitulo(valor);
 		default:
 			return valor;
 		}
@@ -66,6 +68,10 @@ public class ArrangeProcessor {
 
 	private static String procesarPonderacion() {
 		return "1";
+	}
+
+	private static String procesarTitulo(String valor) {
+		return valor;
 	}
 
 	/**

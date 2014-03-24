@@ -93,7 +93,8 @@ public class Pagina {
 	public EventoMemoria levantarMapeo(Mapper mapper)
 	{
 		// Ejecuto constructor copia para que tome los mapeos
-		EventoMemoria evt = new EventoMemoria(mapper.getEventoModelo(),this);
+		EventoMemoria evtModelo = mapper.getEventoModelo();
+		EventoMemoria evt = new EventoMemoria(evtModelo,this);
 		
 		for (AtributoEventoMemoria att : evt.getAtributos())
 		{

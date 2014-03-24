@@ -83,7 +83,7 @@ public class PlantillaUtil {
 	 * @param descripcionBreve
 	 * @return
 	 */
-	private static String limpiarHTML(String descripcionBreve) {
+	public static String limpiarHTML(String descripcionBreve) {
 		return descripcionBreve.substring(descripcionBreve.indexOf("<body>") + 6, descripcionBreve.indexOf("</body>"));
 	}
 

@@ -6,4 +6,7 @@ public enum ArrangeEnum { FECHA
 	, FECHA_ACTUAL
 	, CATEGORIA
 	, PONDERACION
+	, TITULO_PAGINA
+	, LINK
+	, IMAGEN
 }

@@ -24,7 +24,7 @@ public class Mapper {
 	
 	private ArrayList<AtributoEventoMemoria> atributosMemoria;
 	
-	private EventoMemoria eventoModelo;
+	private static EventoMemoria eventoModelo;
 	
 	public Mapper()
 	{
@@ -58,7 +58,9 @@ public class Mapper {
 		List<ArrangeEnum> arrangesFecha = new ArrayList<ArrangeEnum>(1);
 		arrangesFecha.add(ArrangeEnum.FECHA);
 		mapear("fecha", attFecha, plantillaFecha, arrangesFecha);
-		mapear("titulo", "torneo", null); //TODO: Arreglar
+		List<ArrangeEnum> arrangeTitulo = new ArrayList<ArrangeEnum>();
+		arrangeTitulo.add(ArrangeEnum.TITULO_PAGINA);
+		mapear("titulo", "torneo", arrangeTitulo); //TODO: Arreglar
 		List<ArrangeEnum> arrangeCategoria = new ArrayList<ArrangeEnum>();
 		arrangeCategoria.add(ArrangeEnum.CATEGORIA);
 		mapear("categoria", "categoria", arrangeCategoria);
@@ -74,8 +76,7 @@ public class Mapper {
 		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
 		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);
 		arrangesDesc.add(ArrangeEnum.DESCRIPCION_BREVE);
-		mapear("descripcionBreve", atts, plantillaDescripcion, arrangesDesc);
-		
+		mapear("descripcionBreve", atts, plantillaDescripcion, arrangesDesc);		
 	}
 
 	/**
@@ -83,13 +84,12 @@ public class Mapper {
 	 * considerando una serie de arranges que procesarán el valor para que sea el adecuado
 	 * 
 	 * @param attMemoria
-	 * @param tipoMemoria
 	 * @param attFicha
 	 * @param arranges
 	 */
 	private void mapear(String attMemoria, String attFicha, List<ArrangeEnum> arranges)
 	{
-		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria);
+		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria, this.eventoModelo);
 		att.setArranges(arranges);
 		AtributoExtranjero ext = new AtributoExtranjero(attFicha);
 		MapaAtributosMapeados map = new MapaAtributosMapeados();
@@ -109,7 +109,7 @@ public class Mapper {
 	 * 
 	 */	 
 	private void mapear(String attMemoria, String[] atts, String plantilla,List<ArrangeEnum> arranges) {
-		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria);
+		AtributoEventoMemoria att = new AtributoEventoMemoria(attMemoria, this.eventoModelo);
 		att.setArranges(arranges);
 		MapaAtributosMapeados map = new MapaAtributosMapeados();
 		map.setPlantillaMapeo(plantilla);
