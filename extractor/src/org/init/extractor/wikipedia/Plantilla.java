@@ -45,7 +45,7 @@ public class Plantilla {
 	 * 
 	 * @throws MalformedURLException
 	 */
-	public void cargarPaginas(Mapper mapper) throws MalformedURLException {
+	public void cargarPaginas() throws MalformedURLException {
 		// Ejecuto el request de las páginas a wikipedia a través de su API HTML
 		String stringListaPaginas = Request.requestGeneral(this.getUrl()
 				.toString());
@@ -56,6 +56,9 @@ public class Plantilla {
 
 		// Tomo el array del json prosesado con la lista de las páginas
 		JSONArray arrayProcesado = listaPaginas.getJSONArray("array");
+		
+		// Creo el responsable de los mapeos
+		Mapper mapper = new Mapper();
 
 		// Recorro el arrayProcesado, busco cada una de sus páginas y traigo el
 		// resultado en json que guardo en arrayInfoboxes

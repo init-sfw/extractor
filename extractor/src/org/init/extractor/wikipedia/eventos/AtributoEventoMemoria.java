@@ -10,6 +10,7 @@ import org.init.extractor.Constantes;
 import org.init.extractor.excepciones.ImposibleMapearEventoException;
 import org.init.extractor.utils.ArrangeEnum;
 import org.init.extractor.utils.ArrangeProcessor;
+import org.init.extractor.utils.AtributosMemoriaEnum;
 
 /**
  * Clase que representa a un atributo de un evento que será compatible al
@@ -22,14 +23,16 @@ import org.init.extractor.utils.ArrangeProcessor;
 public class AtributoEventoMemoria {
 
 	private String nombre;
+	private AtributosMemoriaEnum tipo;
 	private MapaAtributosMapeados listaMapeos;
 	private String valorFinal;
 	private List<ArrangeEnum> arranges;
 	private EventoMemoria eventoPadre;
 
-	public AtributoEventoMemoria(String nombre, EventoMemoria evt) {
-		this.nombre = nombre;
+	public AtributoEventoMemoria(AtributosMemoriaEnum tipo, EventoMemoria evt) {
+		this.nombre = tipo.getNombre();
 		this.eventoPadre = evt;
+		this.tipo = tipo;
 		arranges = new ArrayList<ArrangeEnum>();
 	}
 
@@ -105,5 +108,13 @@ public class AtributoEventoMemoria {
 
 	public void setEventoPadre(EventoMemoria eventoPadre) {
 		this.eventoPadre = eventoPadre;
+	}
+
+	public AtributosMemoriaEnum getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(AtributosMemoriaEnum tipo) {
+		this.tipo = tipo;
 	}
 }

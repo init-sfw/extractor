@@ -33,13 +33,9 @@ public class Extractor {
 	 * @throws MalformedURLException 
 	 */
 	public void init() throws MalformedURLException
-	{		
-		// Mapeo los atributos
-		Mapper map = new Mapper();
-		map.mapearla();
-		
+	{
 		// Cargo las páginas que correspondan a la plantilla seteada
-		plantillaObjetivo.cargarPaginas(map);
+		plantillaObjetivo.cargarPaginas();
 
 		// Array con todos los infoboxes de las páginas que se pedirán
 		JSONArray arrayInfoboxes = new JSONArray();		

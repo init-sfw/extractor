@@ -23,24 +23,21 @@ public class EventoMemoria {
 		atributos = new ArrayList<AtributoEventoMemoria>();
 	}
 	
-	public EventoMemoria(Pagina padre)
-	{
-		atributos = new ArrayList<AtributoEventoMemoria>();
-		this.paginaPadre = padre;
-	}
-	
 	/**
 	 * Constructor copia que sirve para tomar los valores cargados al modelo y poder seguir trabajando con una
 	 * nueva instancia sin alterar la anterior
 	 * 
-	 * @param evt
+	 * @param padre la página padre del evento
 	 */
-	public EventoMemoria(EventoMemoria evt, Pagina padre)
+	public EventoMemoria(Pagina padre)
 	{
-		//TODO: implementar deep copy o buscar la forma de resolver esto
-		this.atributos = new ArrayList<AtributoEventoMemoria>(evt.atributos);
 		this.paginaPadre = padre;
-		Collections.copy(this.atributos, evt.atributos);
+		this.atributos = new ArrayList<AtributoEventoMemoria>();
+	}
+
+	public void addAtributo(AtributoEventoMemoria atributo) {
+		if (atributo!= null)
+			this.atributos.add(atributo);
 	}
 
 	public List<AtributoEventoMemoria> getAtributos() {
