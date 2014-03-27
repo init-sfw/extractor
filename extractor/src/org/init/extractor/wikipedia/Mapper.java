@@ -24,7 +24,7 @@ public class Mapper {
 	
 	private ArrayList<AtributoEventoMemoria> atributosMemoria;
 	
-	private static EventoMemoria eventoModelo;
+	private EventoMemoria eventoModelo;
 	
 	public Mapper()
 	{
