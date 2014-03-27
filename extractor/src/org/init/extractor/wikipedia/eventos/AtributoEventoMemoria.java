@@ -51,7 +51,7 @@ public class AtributoEventoMemoria {
 						valorFinal = this.eventoPadre.getPaginaPadre().getNombre(); 
 						break;
 					case LINK:
-						valorFinal = Constantes.ENCABEZADO_URL + this.eventoPadre.getPaginaPadre().getNombre().replace(" ", "_"); 
+						valorFinal = ArrangeProcessor.procesarArrange(e, this.eventoPadre.getPaginaPadre().getNombre());
 						break;
 					default:
 						valorFinal = ArrangeProcessor.procesarArrange(e, valorFinal);

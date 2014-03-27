@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.init.extractor.Constantes;
+
 public class ArrangeProcessor {
 	
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -35,6 +37,8 @@ public class ArrangeProcessor {
 			return procesarPonderacion();
 		case TITULO_PAGINA:
 			return procesarTitulo(valor);
+		case LINK:
+			return procesarLink(valor);
 		default:
 			return valor;
 		}
@@ -71,6 +75,13 @@ public class ArrangeProcessor {
 	}
 
 	private static String procesarTitulo(String valor) {
+		return valor;
+	}
+
+	private static String procesarLink(String valor) {
+		valor = valor.replace(" ", "_");
+		valor = Constantes.ENCABEZADO_URL + valor; 
+		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
 		return valor;
 	}
 

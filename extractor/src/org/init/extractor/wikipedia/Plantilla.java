@@ -62,7 +62,7 @@ public class Plantilla {
 
 		// Recorro el arrayProcesado, busco cada una de sus páginas y traigo el
 		// resultado en json que guardo en arrayInfoboxes
-		for (int i = 0; i < arrayProcesado.size(); i++) { // TODO: arrayProcesado.size()
+		for (int i = 0; i < 35; i++) { // TODO: arrayProcesado.size()
 			JSONObject object = (JSONObject) arrayProcesado.get(i);
 			String titulo = object.get("title").toString();
 			String pageid = object.get("pageid").toString();

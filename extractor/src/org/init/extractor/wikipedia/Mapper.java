@@ -136,7 +136,7 @@ public class Mapper {
 
 	private void mapearLink(AtributoEventoMemoria att) {
 		List<ArrangeEnum> arrangesLink = new ArrayList<ArrangeEnum>(1);
-		arrangesLink.add(ArrangeEnum.URL);
+		arrangesLink.add(ArrangeEnum.LINK);
 		ejecutarMapeo(att, "link", arrangesLink);  //TODO: Arreglar
 	}
 
