@@ -25,8 +25,17 @@ public class Constantes {
 	/** Encabezado de url de Wikipedia reducido */
 	public static final String ENCABEZADO_CORTO = "http://es.wikipedia.org";
 	
+	/** Encabezado API Wikipedia */
+	public static final String ENCABEZADO_API = "http://es.wikipedia.org/w/api.php?";
+	
 	/** Constante de encabezado de la API para búsqueda de una página particular */
-	public static final String ENCABEZADO_API_PAGINA = "http://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=";
+	public static final String ENCABEZADO_API_PAGINA = ENCABEZADO_API + "action=query&prop=revisions&rvprop=content&format=json&titles=";
+
+	/** Constante de encabezado de la API que expande un template particular pasado como texto */
+	public static final String ENCABEZADO_API_EXPAND_TEMPLATE = ENCABEZADO_API + "action=expandtemplates&format=json&text=";
+	
+	/** Constante de encabezado API que parsea un texto particular en formato MediaWiki */
+	public static final String ENCABEZADO_API_PARSE = ENCABEZADO_API + "action=parse&format=json&text=";
 	
 	/** Constante de query a la API para traer la lista de páginas de una plantilla particular*/
 	public static final String QUERY_API_PLANTILLA = "http://es.wikipedia.org/w/api.php?action=query&prop=revisions&eilimit=500&format=json&list=embeddedin&eititle=Plantilla:";
