@@ -34,5 +34,11 @@
 		<artifactId>wikitext</artifactId>
 		<version>0.9.4.I20090220-1600-e3x</version>
 	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.11</version>
+</dependency>
+            
   </dependencies>
 </project>
