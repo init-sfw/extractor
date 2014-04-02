@@ -41,5 +41,16 @@ public class FileUtil {
 	public static Object convertirPaisAISO(String string) {
 		return null;
 	}
+	
+	/**
+	 * Convierte un JSON de un solo objeto al formato adecuado de array de objetos
+	 * 
+	 * @param url la url del JSON source
+	 * @param output la url del JSON destino
+	 */
+	public static void convertJSONISOToProperFormat(String url, String output)
+	{
+		 //f = leerJSON(url);
+	}
 
 }

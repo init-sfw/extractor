@@ -9,4 +9,5 @@ public enum ArrangeEnum { FECHA
 	, TITULO_PAGINA
 	, LINK
 	, IMAGEN
+	, PAIS
 }

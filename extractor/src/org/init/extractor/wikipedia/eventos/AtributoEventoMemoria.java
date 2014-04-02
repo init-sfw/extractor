@@ -66,6 +66,10 @@ public class AtributoEventoMemoria {
 				{
 					throw new ImposibleMapearEventoException(this, ex);
 				}
+				catch (ImposibleMapearEventoException ex)
+				{
+					throw new ImposibleMapearEventoException(this, ex);
+				}
 			}
 		}
 	}

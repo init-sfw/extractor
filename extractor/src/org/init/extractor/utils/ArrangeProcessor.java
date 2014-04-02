@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.init.extractor.Constantes;
+import org.init.extractor.excepciones.ImposibleMapearEventoException;
 
 public class ArrangeProcessor {
 	
@@ -19,9 +20,10 @@ public class ArrangeProcessor {
 	 * @param arrange
 	 * @param valor
 	 * @return el valor procesado con los arranges
+	 * @throws ImposibleMapearEventoException 
 	 * 
 	 */
-	public static String procesarArrange(ArrangeEnum arrange, String valor) throws StringIndexOutOfBoundsException, NumberFormatException {
+	public static String procesarArrange(ArrangeEnum arrange, String valor) throws StringIndexOutOfBoundsException, NumberFormatException, ImposibleMapearEventoException {
 		switch (arrange) {
 		case FECHA:
 			return procesarFecha(valor);
@@ -39,6 +41,8 @@ public class ArrangeProcessor {
 			return procesarTitulo(valor);
 		case LINK:
 			return procesarLink(valor);
+		case PAIS:
+			return procesarPais(valor);
 		default:
 			return valor;
 		}
@@ -50,9 +54,7 @@ public class ArrangeProcessor {
 
 	private static String procesarDescripcion(String valor) {
 		// Quito algunos valores wiki que no me interesan
-		valor = valor.replace("selb|", "").replace("Selb|", "")
-				.replace("sel|", "").replace("bandera|", "")
-				.replace("bandera2|", "");
+		valor = limpiarPais(valor);
 		// Transformo la notación wiki a HTML
 		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
 		return valor;
@@ -83,6 +85,17 @@ public class ArrangeProcessor {
 		valor = Constantes.ENCABEZADO_URL + valor; 
 		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
 		return valor;
+	}
+
+	private static String procesarPais(String valor) throws ImposibleMapearEventoException {
+		if (valor.indexOf("{{") != -1)
+		{
+			valor = limpiarPais(valor);
+			String alfa3 = valor.substring(valor.indexOf("{{") + 2, valor.indexOf("{{") + 5);
+			return PaisesUtil.iso3CountryCodeToIso2CountryCode(alfa3);
+		}
+		else
+			return valor;
 	}
 
 	/**
@@ -140,4 +153,9 @@ public class ArrangeProcessor {
 		return -1;
 	}
 
+	private static String limpiarPais(String valor) {
+		return valor.replace("selb|", "").replace("Selb|", "")
+		.replace("sel|", "").replace("bandera|", "")
+		.replace("bandera2|", "");
+	}
 }

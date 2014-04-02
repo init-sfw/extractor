@@ -123,7 +123,9 @@ public class Mapper {
 	}
 
 	private void mapearPais(AtributoEventoMemoria att) {
-		ejecutarMapeo(att, "pais", null); //XXX: con este código Ale podría arrancar
+		List<ArrangeEnum> arrangesPais = new ArrayList<ArrangeEnum>(1);
+		arrangesPais.add(ArrangeEnum.PAIS);
+		ejecutarMapeo(att, "pais", arrangesPais);
 	}
 
 	private void mapearDescripcionBreve(AtributoEventoMemoria att) {
