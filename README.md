@@ -27,3 +27,16 @@ La próxima versión tendrá como objetivo permitir trabajar con alguna otra pla
 ## Más información
 
 Más información sobre la investigación en marcha puede encontrarse en este documento (necesita permiso de acceso): https://docs.google.com/document/d/1oZ-4i0lSLBRiJDw0nS-wjFz4FVfhr-J-E1FOV8u3hv0
+
+## Futurología
+
+A modo de propuesta futura de investigación y aplicación se plantean las siguientes herramientas y tecnologías como posibles:
+
+- Arquitectura robusta, bien interfaceada y aprovechando la potencialidad del lenguaje y los patrones arquitectónicos
+- [SPARQL](http://es.wikipedia.org/wiki/SPARQL) para realizar la extracción de información estructurada y montada sobre una base de datos relacional como [dbpedia](http://dbpedia.org/About), estudiar también la posible interacción con el [extraction-framework](https://github.com/dbpedia/extraction-framework)
+- [HPC](http://es.wikipedia.org/wiki/Computaci%C3%B3n_de_alto_rendimiento) para potenciar el procesamiento de los mapeos de fuentes origen a fuentes destino
+- Extracción de múltiples fuentes de datos:
+  - Mails
+  - Calendarios
+  - Noticias
+  - Repositorios
