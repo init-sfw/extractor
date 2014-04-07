@@ -95,7 +95,7 @@ public class ArrangeProcessor {
 			return PaisesUtil.iso3CountryCodeToIso2CountryCode(alfa3);
 		}
 		else
-			return valor;
+			throw new ImposibleMapearEventoException("Imposible mapear el valor '" + valor + "' a un país válido");
 	}
 
 	/**

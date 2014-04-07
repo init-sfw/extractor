@@ -15,6 +15,11 @@ public class ImposibleMapearEventoException extends Exception {
 		super("No se pudo cargar el evento por algún error en el mapeo");
 	}
 	
+	public ImposibleMapearEventoException(String msj)
+	{
+		super(msj);
+	}
+	
 	public ImposibleMapearEventoException(String msj, Exception e)
 	{
 		super(msj,e);
