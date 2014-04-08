@@ -54,6 +54,8 @@ public class Extractor {
 		System.out.println("\nSe cargaron " + plantillaObjetivo.getPaginasExitosas().size()
 				+ " datos de páginas de un total de " + (plantillaObjetivo.getPaginasExitosas().size() + plantillaObjetivo.getPaginasFallidas().size()));
 		System.out.println("Fallaron: " + plantillaObjetivo.getPaginasFallidas().size() + " páginas");
+		double porc = plantillaObjetivo.getPaginasExitosas().size() * 100 / (plantillaObjetivo.getPaginasExitosas().size() + plantillaObjetivo.getPaginasFallidas().size());
+		System.out.println("Porcentaje de efectividad de la fuente de datos con el mappeo: " + porc + "%");
 		
 	}
 }

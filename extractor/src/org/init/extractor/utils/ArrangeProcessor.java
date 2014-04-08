@@ -93,14 +93,22 @@ public class ArrangeProcessor {
 	}
 
 	private static String procesarPais(String valor) throws ImposibleMapearEventoException {
+		// Si es plantilla de MediaWiki
 		if (valor.indexOf("{{") != -1)
 		{
 			valor = limpiarPais(valor);
 			String alfa3 = valor.substring(valor.indexOf("{{") + 2, valor.indexOf("{{") + 5);
 			return PaisesUtil.iso3CountryCodeToIso2CountryCode(alfa3);
 		}
+		// Si no es plantilla, intento convertirlo
 		else
-			throw new ImposibleMapearEventoException("Imposible mapear el valor '" + valor + "' a un país válido");
+		{
+			valor = PaisesUtil.countryNameToIso2Code(valor);
+			if (valor != null)
+				return valor;
+			else
+				throw new ImposibleMapearEventoException("Imposible mapear el valor '" + valor + "' a un país válido");				
+		}		
 	}
 
 	/**
@@ -161,6 +169,6 @@ public class ArrangeProcessor {
 	private static String limpiarPais(String valor) {
 		return valor.replace("selb|", "").replace("Selb|", "")
 		.replace("sel|", "").replace("bandera|", "")
-		.replace("bandera2|", "");
+		.replace("bandera2|", "").replace("Bandera|", "");
 	}
 }

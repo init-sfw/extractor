@@ -17,9 +17,21 @@ import org.init.extractor.excepciones.ImposibleMapearEventoException;
 public class PaisesUtil {
 
 	private static String loc = "es_AR";
+	private static Map<String, String> countries = initCountries();
 	private static Map<String, Locale> localeMap = initCountryCodeMapping();
 	
+	private static Map<String, String> initCountries()
+	{
+		Map<String, String> countries = new HashMap<String,String>();
+	    for (String iso : Locale.getISOCountries()) {
+	        Locale l = new Locale(loc, iso);
+	        countries.put(l.getDisplayCountry(), iso);
+	    }
+	    return countries;
+	}
+	
 	private static Map<String, Locale> initCountryCodeMapping() {
+		// TODO: arreglar teniendo en cuenta el método initCountries
 	    String[] countries = Locale.getISOCountries();
 	    Map<String, Locale> map = new HashMap<String, Locale>(countries.length);
 	    for (String country : countries) {
@@ -27,6 +39,17 @@ public class PaisesUtil {
 	        map.put(locale.getISO3Country().toUpperCase(), locale);
 	    }
 	    return map;
+	}
+	
+	/**
+	 * Método que convierte el nombre de un país a su código ISO en formato alfa2
+	 * 
+	 * @param countryName
+	 * @return
+	 */
+	public static String countryNameToIso2Code(String countryName)
+	{
+		return countries.get(countryName);
 	}
 	
 	/**

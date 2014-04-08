@@ -97,6 +97,8 @@ public class PlantillaUtil {
 	 * @return
 	 */
 	public static String convertirPlantillaPais(String plantilla) {
+		try
+		{
 		String ret;
 		if (plantilla.contains(" "))
 		{
@@ -110,6 +112,12 @@ public class PlantillaUtil {
 			ret = ret.substring(ret.indexOf(":") + 1);
 		}
 		return ret;
+		}
+		catch (Exception e)
+		{
+			System.out.println("A");
+			return "";
+		}
 	}
 
 	/**
