@@ -7,12 +7,14 @@ import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
 import org.eclipse.mylyn.wikitext.core.util.ServiceLocator;
+import org.init.extractor.Constantes;
 import org.init.extractor.wikipedia.Pagina;
 import org.init.extractor.wikipedia.Plantilla;
 import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
 import org.init.extractor.wikipedia.eventos.EventoMemoria;
 
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 /**
  * Clase de utilidades para trabajar con las plantillas de Wikipedia
@@ -69,13 +71,13 @@ public class PlantillaUtil {
 	 * @return
 	 */
 	public static String parseWikiTextByLanguageToHTML(String wikiText) {
-		MarkupLanguage language = ServiceLocator.getInstance()
-				.getMarkupLanguage("MediaWiki");
+		MarkupLanguage language = ServiceLocator.getInstance().getMarkupLanguage("MediaWiki");
 		StringWriter writer = new StringWriter();
 		HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
 		MarkupParser parser = new MarkupParser(language, builder);
 		parser.parse(wikiText);
-		return writer.toString();
+		String ret = writer.toString().substring(writer.toString().indexOf("<body>") + 6, writer.toString().indexOf("</body>"));
+		return ret;
 	}
 
 	/** 
@@ -85,6 +87,29 @@ public class PlantillaUtil {
 	 */
 	public static String limpiarHTML(String descripcionBreve) {
 		return descripcionBreve.substring(descripcionBreve.indexOf("<body>") + 6, descripcionBreve.indexOf("</body>"));
+	}
+	
+	/**
+	 * 
+	 * Método que expande una plantilla de mediawiki de país al nombre de país correspondiente.
+	 * 
+	 * @param plantilla la plantilla en formato MediaWiki {{COD}}
+	 * @return
+	 */
+	public static String convertirPlantillaPais(String plantilla) {
+		String ret;
+		if (plantilla.contains(" "))
+		{
+			plantilla = plantilla.replace(" ", "_");
+		}
+		String request = Request.requestGeneral(Constantes.ENCABEZADO_API_PARSE + plantilla);
+		JSONObject json = (JSONObject) JSONSerializer.toJSON(request);
+		ret = json.getJSONObject("parse").getJSONArray("links").getJSONObject(0).getString("*");
+		if (ret.contains(":"))
+		{
+			ret = ret.substring(ret.indexOf(":") + 1);
+		}
+		return ret;
 	}
 
 	/**

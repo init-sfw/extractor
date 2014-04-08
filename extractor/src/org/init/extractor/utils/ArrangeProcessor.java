@@ -57,6 +57,11 @@ public class ArrangeProcessor {
 		valor = limpiarPais(valor);
 		// Transformo la notación wiki a HTML
 		valor = WikiModel.toHtml(valor).replace("\n", "<br/>");
+		while (valor.indexOf("{{") > -1)
+		{
+			String plantilla = valor.substring(valor.indexOf("{{"),valor.indexOf("}}") + 2);
+			valor = valor.replace(plantilla, PlantillaUtil.convertirPlantillaPais(plantilla));
+		}
 		return valor;
 	}
 
