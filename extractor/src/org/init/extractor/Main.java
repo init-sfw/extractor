@@ -3,6 +3,8 @@ package org.init.extractor;
 import java.net.MalformedURLException;
 
 import org.init.extractor.wikipedia.Plantilla;
+import org.init.extractor.wikipedia.mappers.Mapper;
+import org.init.extractor.wikipedia.mappers.MapperPlantillaFutbol;
 
 /**
  * Clase principal encargada de dar inicio a las tareas del extractor.
@@ -15,7 +17,8 @@ public class Main {
 	
 	public static void main (String [] args) throws MalformedURLException
 	{
-		Plantilla plantilla = new Plantilla("Ficha_de_torneo_de_fútbol");
+		// Opero la plantilla de fichas de torneo de fútbol
+		Plantilla plantilla = new Plantilla("Ficha_de_torneo_de_fútbol", new MapperPlantillaFutbol());
 		Extractor extractor = new Extractor(plantilla);
 		extractor.init();
 	}

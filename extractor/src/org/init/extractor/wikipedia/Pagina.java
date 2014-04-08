@@ -19,6 +19,7 @@ import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
 import org.init.extractor.wikipedia.eventos.AtributoExtranjero;
 import org.init.extractor.wikipedia.eventos.EventoMemoria;
 import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.mappers.Mapper;
 
 /**
  * Clase que representa a una página particular de Wikipedia, la cual puede
@@ -79,24 +80,24 @@ public class Pagina {
 	 * Método que carga los atributos del template de wikipedia a la página,
 	 * respetando el formato de mapeo establecido
 	 */
-	public void cargarAtributos(Mapper mapper) {
-		EventoMemoria evt = levantarMapeo(mapper);
+	public void cargarAtributos() {
+		EventoMemoria evt = levantarMapeo();
 		this.evento = evt;
 	}
 	
 	/**
 	 * Método que levanta los valores de los mapeos desde el infobox y los devuelve en un objeto EventoMemoria cargado según mapeo
 	 * 
-	 * @param mapper
+	 * @return
 	 * 
 	 */
-	public EventoMemoria levantarMapeo(Mapper mapper)
+	public EventoMemoria levantarMapeo()
 	{		
 		// Creo el evento para Memoria
 		EventoMemoria evt = new EventoMemoria(this);
 		
 		// Mapeo todos los atributos
-		mapper.mapearEvento(evt);
+		plantillaPadre.getMapper().mapearEvento(evt);
 		
 		for (AtributoEventoMemoria att : evt.getAtributos())
 		{

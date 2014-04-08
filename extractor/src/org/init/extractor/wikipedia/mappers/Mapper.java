@@ -1,4 +1,4 @@
-package org.init.extractor.wikipedia;
+package org.init.extractor.wikipedia.mappers;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,12 +16,13 @@ import org.init.extractor.wikipedia.eventos.EventoMemoria;
 import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
 
 /**
- * Clae que resuelve el mapeo de los atributos de memoria a los atributos de las plantillas de wikipedia
+ * Clase abstracta que define el mapeo de los atributos de memoria a los atributos de 
+ * las plantillas de wikipedia
  * 
  * @author fbobbio
  *
  */
-public class Mapper {
+public abstract class Mapper {
 	
 	public Mapper()
 	{
@@ -96,62 +97,23 @@ public class Mapper {
 		}
 	}
 
-	private void mapearFecha(AtributoEventoMemoria att) {
-		String [] attFecha = {"fechainicia", "año"};
-		String plantillaFecha = "{fechainicia}/{año}";
-		List<ArrangeEnum> arrangesFecha = new ArrayList<ArrangeEnum>(1);
-		arrangesFecha.add(ArrangeEnum.FECHA);
-		ejecutarMapeo(att, attFecha, plantillaFecha, arrangesFecha);
-	}
+	protected abstract void mapearFecha(AtributoEventoMemoria att);
 
-	private void mapearFechaCreacion(AtributoEventoMemoria att) {
-		List<ArrangeEnum> arrangeFechaActual = new ArrayList<ArrangeEnum>();
-		arrangeFechaActual.add(ArrangeEnum.FECHA_ACTUAL);
-		ejecutarMapeo(att, "fechaCreacion", arrangeFechaActual);
-	}
+	protected abstract void mapearFechaCreacion(AtributoEventoMemoria att);
 	
-	private void mapearTitulo(AtributoEventoMemoria att) {
-		List<ArrangeEnum> arrangeTitulo = new ArrayList<ArrangeEnum>();
-		arrangeTitulo.add(ArrangeEnum.TITULO_PAGINA);
-		ejecutarMapeo(att, "torneo", arrangeTitulo); //TODO: Arreglar
-	}
+	protected abstract void mapearTitulo(AtributoEventoMemoria att);
 
-	private void mapearCategoria(AtributoEventoMemoria att) {
-		List<ArrangeEnum> arrangeCategoria = new ArrayList<ArrangeEnum>();
-		arrangeCategoria.add(ArrangeEnum.CATEGORIA);
-		ejecutarMapeo(att, "categoria", arrangeCategoria);
-	}
+	protected abstract void mapearCategoria(AtributoEventoMemoria att);
 
-	private void mapearPais(AtributoEventoMemoria att) {
-		List<ArrangeEnum> arrangesPais = new ArrayList<ArrangeEnum>(1);
-		arrangesPais.add(ArrangeEnum.PAIS);
-		ejecutarMapeo(att, "pais", arrangesPais);
-	}
+	protected abstract void mapearPais(AtributoEventoMemoria att);
 
-	private void mapearDescripcionBreve(AtributoEventoMemoria att) {
-		String atts[] = {"pais","campeón","subcampeón","goleador","goles"};
-		String plantillaDescripcion = "\nSede: {pais} \nCampeón: {campeón}\nSubcampeón: {subcampeón}\nGoleador: {goleador}\nGoles totales: {goles}";
-		List<ArrangeEnum> arrangesDesc = new ArrayList<ArrangeEnum>(1);
-		arrangesDesc.add(ArrangeEnum.DESCRIPCION_BREVE);
-		ejecutarMapeo(att, atts, plantillaDescripcion, arrangesDesc);	
-	}
+	protected abstract void mapearDescripcionBreve(AtributoEventoMemoria att);
 
-	private void mapearLink(AtributoEventoMemoria att) {
-		List<ArrangeEnum> arrangesLink = new ArrayList<ArrangeEnum>(1);
-		arrangesLink.add(ArrangeEnum.LINK);
-		ejecutarMapeo(att, "link", arrangesLink);  //TODO: Arreglar
-	}
+	protected abstract void mapearLink(AtributoEventoMemoria att);
 
-	private void mapearImagen(AtributoEventoMemoria att) {
-		ejecutarMapeo(att, "imagen", null); //TODO: Arreglar
-	}
+	protected abstract void mapearImagen(AtributoEventoMemoria att);
 
-	private void mapearPonderacion(AtributoEventoMemoria att) {
-		//TODO: en este caso los arranges quizás puedan evitarse seteando el valor directamente
-		List<ArrangeEnum> arrangesPonderacion = new ArrayList<ArrangeEnum>(1);
-		arrangesPonderacion.add(ArrangeEnum.PONDERACION);
-		ejecutarMapeo(att, "ponderacion", arrangesPonderacion);
-	}
+	protected abstract void mapearPonderacion(AtributoEventoMemoria att);
 
 	/**
 	 * Método que mapea un atributo de Memoria a un atributo de los datos extraídos
@@ -161,7 +123,7 @@ public class Mapper {
 	 * @param attFicha
 	 * @param arranges
 	 */
-	private void ejecutarMapeo(AtributoEventoMemoria attMemoria, String attFicha, List<ArrangeEnum> arranges)
+	protected void ejecutarMapeo(AtributoEventoMemoria attMemoria, String attFicha, List<ArrangeEnum> arranges)
 	{
 		attMemoria.setArranges(arranges);
 		AtributoExtranjero ext = new AtributoExtranjero(attFicha);
@@ -181,7 +143,7 @@ public class Mapper {
 	 * @param arranges
 	 * 
 	 */	 
-	private void ejecutarMapeo(AtributoEventoMemoria attMemoria, String[] atts, String plantilla,List<ArrangeEnum> arranges) {
+	protected void ejecutarMapeo(AtributoEventoMemoria attMemoria, String[] atts, String plantilla,List<ArrangeEnum> arranges) {
 		attMemoria.setArranges(arranges);
 		MapaAtributosMapeados map = new MapaAtributosMapeados();
 		map.setPlantillaMapeo(plantilla);

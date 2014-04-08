@@ -8,8 +8,8 @@ import net.sf.json.JSONObject;
 
 import org.init.extractor.utils.FileUtil;
 import org.init.extractor.utils.PlantillaUtil;
-import org.init.extractor.wikipedia.Mapper;
 import org.init.extractor.wikipedia.Plantilla;
+import org.init.extractor.wikipedia.mappers.Mapper;
 
 /** 
  * Clase central encargada de comandar las tareas de todo el aplicativo para generar fuentes de datos

@@ -12,6 +12,7 @@ import net.sf.json.JSONSerializer;
 import org.init.extractor.Constantes;
 import org.init.extractor.utils.Request;
 import org.init.extractor.wikipedia.eventos.MapaAtributosMapeados;
+import org.init.extractor.wikipedia.mappers.Mapper;
 
 /**
  * Clase que representa originalmente una plantilla de wikipedia para contener
@@ -28,11 +29,13 @@ public class Plantilla {
 
 	private String nombre;
 	private URL url;
+	private Mapper mapper;
 	List<Pagina> paginasExitosas;
 	List<Pagina> paginasFallidas;
-
-	public Plantilla(String nombre) throws MalformedURLException {
+	
+	public Plantilla(String nombre, Mapper mapper) throws MalformedURLException {
 		this.nombre = nombre;
+		this.mapper = mapper;
 		this.url = new URL(Constantes.QUERY_API_PLANTILLA + this.nombre);
 		paginasExitosas = new ArrayList<Pagina>();
 		paginasFallidas = new ArrayList<Pagina>();
@@ -56,9 +59,6 @@ public class Plantilla {
 
 		// Tomo el array del json prosesado con la lista de las páginas
 		JSONArray arrayProcesado = listaPaginas.getJSONArray("array");
-		
-		// Creo el responsable de los mapeos
-		Mapper mapper = new Mapper();
 
 		// Recorro el arrayProcesado, busco cada una de sus páginas y traigo el
 		// resultado en json que guardo en arrayInfoboxes
@@ -69,7 +69,7 @@ public class Plantilla {
 
 			Pagina p = new Pagina(titulo, pageid, this);
 			p.generarContenido();
-			p.cargarAtributos(mapper);
+			p.cargarAtributos();
 			if (p.getEvento() != null) {
 				paginasExitosas.add(p);
 			}
@@ -140,5 +140,13 @@ public class Plantilla {
 
 	public void setPaginasFallidas(List<Pagina> paginasFallidas) {
 		this.paginasFallidas = paginasFallidas;
+	}
+
+	public Mapper getMapper() {
+		return mapper;
+	}
+
+	public void setMapper(Mapper mapper) {
+		this.mapper = mapper;
 	}
 }
