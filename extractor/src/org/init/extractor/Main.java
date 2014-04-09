@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 
 import org.init.extractor.wikipedia.Plantilla;
 import org.init.extractor.wikipedia.mappers.Mapper;
+import org.init.extractor.wikipedia.mappers.MapperPlantillaConflictosMilitares;
 import org.init.extractor.wikipedia.mappers.MapperPlantillaFutbol;
 
 /**
@@ -21,6 +22,9 @@ public class Main {
 		Plantilla plantilla = new Plantilla("Ficha_de_torneo_de_fútbol", new MapperPlantillaFutbol());
 		Extractor extractor = new Extractor(plantilla);
 		extractor.init();
+		
+		// Opero la plantilla de conflictos militares
+		Plantilla plantillaConflictos = new Plantilla("Ficha_de_conflicto", new MapperPlantillaConflictosMilitares());
 	}
 
 }
