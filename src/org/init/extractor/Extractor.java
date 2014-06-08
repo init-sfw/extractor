@@ -44,7 +44,7 @@ public class Extractor {
 		arrayInfoboxes.addAll(jsonFinal);
 		
 		// Genero el archivo JSON
-		FileUtil.crearArchivoJSON("datos-deportes.json", arrayInfoboxes);
+		FileUtil.crearArchivoJSON("output/datos-deportes.json", arrayInfoboxes);
 		
 		// Estadísticas
 		info();
