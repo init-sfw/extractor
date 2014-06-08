@@ -35,6 +35,7 @@ A modo de propuesta futura de investigación y aplicación se plantean las sigui
 - Arquitectura robusta, bien interfaceada y aprovechando la potencialidad del lenguaje y los patrones arquitectónicos
 - [SPARQL](http://es.wikipedia.org/wiki/SPARQL) para realizar la extracción de información estructurada y montada sobre una base de datos relacional como [dbpedia](http://dbpedia.org/About), estudiar también la posible interacción con el [extraction-framework](https://github.com/dbpedia/extraction-framework)
 - [HPC](http://es.wikipedia.org/wiki/Computaci%C3%B3n_de_alto_rendimiento) para potenciar el procesamiento de los mapeos de fuentes origen a fuentes destino
+- [Minería de datos](http://es.wikipedia.org/wiki/Miner%C3%ADa_de_datos) para la generación de [Data warehoues](http://es.wikipedia.org/wiki/Almac%C3%A9n_de_datos) que sirvan como fuentes de datos.
 - Extracción de múltiples fuentes de datos:
   - Mails
   - Calendarios
