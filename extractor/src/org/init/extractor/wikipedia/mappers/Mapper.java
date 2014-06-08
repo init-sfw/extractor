@@ -1,15 +1,9 @@
 package org.init.extractor.wikipedia.mappers;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.init.extractor.Constantes;
-import org.init.extractor.excepciones.ImposibleMapearEventoException;
 import org.init.extractor.utils.ArrangeEnum;
 import org.init.extractor.utils.AtributosMemoriaEnum;
-import org.init.extractor.utils.PlantillaUtil;
 import org.init.extractor.wikipedia.eventos.AtributoEventoMemoria;
 import org.init.extractor.wikipedia.eventos.AtributoExtranjero;
 import org.init.extractor.wikipedia.eventos.EventoMemoria;

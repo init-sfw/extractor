@@ -1,2 +1,8 @@
 /bin
 /target
+*.*~
+/.classpath
+/.metadata
+/.project
+/.settings
+
